@@ -1,0 +1,35 @@
+Metadata-Version: 2.1
+Name: example-package-YOUR-USERNAME-HERE
+Version: 0.0.1
+Summary: TOPSIS implementation
+Home-page: https://github.com/jahnvi-tanwar/topsis
+Author: Jahnvi Tanwar
+Author-email: jahnvitanwar3@example.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/jahnvi-tanwar/topsis/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: Windows
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# TOPSIS
+
+TOPSIS is a method of compensatory aggregation that compares a set of alternatives by identifying weights for each criterion, normalising scores for each criterion and calculating the geometric distance between each alternative and the ideal alternative, which is the best score in each criterion.
+
+# Function
+
+    performTopsis(dataframe,weight,impact)
+    
+    Parameters:
+        DataFrame : Pandas DataFrame on which TOPSIS is to be applied
+        weight : python string, numeric values separated by comma
+        impact : python string, + or - separated by comma
+
+    Return Value:
+        pandas DataFrame containing addition columns - TOPSIS score and TOPSIS rank
+        
+
+
