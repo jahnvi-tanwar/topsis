@@ -9,3 +9,6 @@ TOPSIS is a method of compensatory aggregation that compares a set of alternativ
 4. Impacts, must be either + or - 
 5. Imapacts and weights must be separated by comma
 
+# Output:
+
+A csv file containing additional columns - TOPSIS score and TOPSIS rank.
