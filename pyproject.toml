@@ -2,9 +2,6 @@
 requires = [
     "setuptools>=42",
     "wheel",
-    "sys",
-    "os", 
-    "pathlib",
     "pandas",
     "math",
     "numpy"
