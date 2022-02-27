@@ -1,62 +1,7 @@
-import sys
-import os 
-import pathlib
 import pandas as pd
 import math
 import numpy as np
 
-# Lambda functions
-
-den = lambda ser : math.sqrt(sum(ser*ser))
-
-CLargs = sys.argv[1:]
-
-#validate arguments
-# print(len(CLargs))
-# print(CLargs)
-if len(CLargs) != 4 :
-    raise Exception("Incorrect Number Of Parameters")
-
-inputFilePath = CLargs[0]
-weights_str = CLargs[1]
-impacts_str = CLargs[2]
-outputFile = CLargs[3] 
-
-def validateString(filePath):
-    val = filePath
-
-    try:
-        val = float(filePath)
-    except:
-        pass
-
-    if type(val) != type('str'):
-        raise Exception("Given argument is not a String")
-
-def validatePath(filePath):
-    if os.path.isfile(filePath) == False :
-        raise Exception("File Not Found")
-
-def validateFile(filePath):
-    if pathlib.Path(filePath).suffix != ".csv" and pathlib.Path(filePath).suffix != ".xlsx":
-        raise Exception("Not a csv or file")
-
-def validateDatabase(dataframe):
-    n = dataframe.shape[1]
-    if n < 3:
-        raise Exception("Input file must contain three or more columns.\n Given file has {} columns.".format(n))
-    
-    # print(type(dataframe[1]))
-
-def validEntry(entry):
-
-    if type(entry) == type('str'):
-        entry = entry.strip()
-
-    if entry == '-' or entry == 'X' or pd.isna(entry)==True or entry == 'NAN':
-        return False
-    else:
-        return True
 
 def matchCheck(colNo, weightl, impactl):
 
@@ -144,25 +89,18 @@ def topsis(df,weights,impacts):
     df["P"] = score
     df["Score"] = (df['P'].rank(method='max', ascending=False))
 
-validateString(inputFilePath)
-validatePath(inputFilePath)
-validateFile(inputFilePath)
 
-df = pd.read_excel(inputFilePath)
+def performTOPSIS(df, weights_str, impacts_str):
+    weights = weights_str.split(",")
+    impacts = impacts_str.split(",")
 
-validateDatabase(df)
+    validateWeight(weights)
+    validateImpact(impacts)
 
-weights = weights_str.split(",")
-impacts = impacts_str.split(",")
+    matchCheck(df.shape[1]-1,len(weights), len(impacts))
+    checkNumeric(df)
 
-validateWeight(weights)
-validateImpact(impacts)
+    new_df = topsis(df,np.float_(weights),impacts)
 
-matchCheck(df.shape[1]-1,len(weights), len(impacts))
-checkNumeric(df)
-
-topsis(df,np.float_(weights),impacts)
-
-# df.drop("Factor",axis=1,inplace=True)
-
-df.to_csv(outputFile)
+    new_df.drop("Factor",axis=1,inplace=True)
+    return new_df
